@@ -24,10 +24,8 @@ liveview_buffer = Queue.Queue(2)
 capture_data = Queue.Queue(4)
 capture_request = threading.Event()
 
-# Pygame Variables
+# Window Variables
 pygame.init()
-white = (255, 255, 255)
-grey = (100, 100, 100)
 width_screen, height_screen = pygame.display.Info().current_w, pygame.display.Info().current_h
 width_window = int(min(width_screen, 1920*height_screen/1080))
 height_window = int(min(1080*width_screen/1920,height_screen))
@@ -42,22 +40,19 @@ pygame.display.set_caption("Photobooth-O-Matic")
 pygame.mouse.set_visible(0)
 
 #image variables
-image0, image1, image2, image3 = pygame.Surface((width_img,height_img)), pygame.Surface(
-    (width_img,height_img)), pygame.Surface((width_img,height_img)), pygame.Surface(
-    (width_img,height_img))
 live_frame_unscaled = pygame.Surface((640, 360))
 live_frame = pygame.Surface((width_live,height_live))
-capture = pygame.Surface((2448, 1376))
-Text_Backdrop = pygame.image.load('Text_Backdrop.png')
-Text_Backdrop = pygame.transform.scale(Text_Backdrop, (width_screen, height_screen)).convert()
 Frame = pygame.image.load('Frame.png')
 Frame.set_colorkey(Frame.get_at((100,100)))             #set the background colour to transparent
 Frame = pygame.transform.scale(Frame, (width_window, height_window)).convert()
+white = (255, 255, 255)
+grey = (100, 100, 100)
+colour_theme = Frame.get_at((0,0))
 
 #message variables, used in the screensaver
 countdown_timer = 0.8
 messages = []
-message_list = open('CHARADES.txt')
+message_list = open('messages.txt')
 message_lines = message_list.readlines()
 for line in message_lines:
     messages.append([line.split(';')[0], (line.split(';')[1].strip()), (line.split(';')[2].strip())])
@@ -147,7 +142,7 @@ def capture_sequence():
 
 def screen_update(character_height, line1='', line2='', line3='', live=1):
 #routine for updating the display with overlayed text
-    window.blit(Text_Backdrop, (0, 0))          #plain background for non live_view calls
+    window.fill(colour_theme)                       #plain background for non live_view calls
     border = 2
     myfont = pygame.font.SysFont("Arial", character_height)
     label, shadow, xpos, ypos = [], [], [], []
@@ -170,6 +165,7 @@ def screen_update(character_height, line1='', line2='', line3='', live=1):
             live_frame_unscaled = pygame.image.load(io.BytesIO(imgdata)).convert()
             live_frame = pygame.transform.scale(live_frame_unscaled, (width_live,height_live)).convert()
             live_frame = pygame.transform.flip(live_frame,1,0)
+            pygame.draw.rect(live_frame, white, (0,0,width_live,height_live), 7)    #add a white border
         window.blit(live_frame, (img_positions[0][0], img_positions[1][0]))
     for i in range(0, 3):
         window.blit(shadow[i], (xpos[i] + border, ypos[i] + border))
@@ -228,7 +224,8 @@ live_view.start()                           #start a thread to download liveview
 capture = BackgroundTakePicture()
 capture.start()                             #start a thread to take pictures in the background
 Loop = True
-window.blit(Text_Backdrop, (0, 0))          #set blank screen whilst connecting to camera
+#window.blit(Text_Backdrop, (0, 0))          #set blank screen whilst connecting to camera
+window.fill(colour_theme)
 pygame.display.flip()
 # </editor-fold>
 
