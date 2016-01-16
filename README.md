@@ -10,7 +10,7 @@ https://drive.google.com/open?id=0B__O93einHn9Z2xIXy1ZWWUxZXM
   
 To Use:  
 1 update the save_directory in the script to one which exists (check your camera url too if not using nex6)  
-2 edit the 'frame.png' so that it suits you (remember to check the colourkey remains correct)  
+2 edit the 'frame.png' so that it suits you 
 3 turn on camera and run Smart Remote Control App  
 4 connect computer to camera wifi host  
 5 configure app to take pictures in 16:9 aspect ratio  
@@ -29,10 +29,10 @@ Simplify the number of libraries required
 Ensure cross platform compatibility  
 Run on a PI   
 Introduce user prompts to   
-choose save location (once only with configuration file)  
-choose required functions eg. omit saving  
+    choose save location (once only with configuration file)  
+    choose required functions eg. omit saving  
 Take steps to make compatible with all nex devices   
-eg. Check api list and only call start rec mode where necessary, automatically find url/port  
+    eg. Check api list and only call start rec mode where necessary, automatically find url/port  
 Automatically set camera aspect, resolution, flash mode etc.  
 Generate frame templates or automatically generate one from provided image and text  
 Remove aliasing between frame and images  
