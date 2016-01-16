@@ -29,10 +29,10 @@ Simplify the number of libraries required
 Ensure cross platform compatibility  
 Run on a PI   
 Introduce user prompts to   
-    choose save location (once only with configuration file)  
-    choose required functions eg. omit saving  
+......choose save location (once only with configuration file)  
+......choose required functions eg. omit saving  
 Take steps to make compatible with all nex devices   
-    eg. Check api list and only call start rec mode where necessary, automatically find url/port  
+......eg. Check api list and only call start rec mode where necessary, automatically find url/port  
 Automatically set camera aspect, resolution, flash mode etc.  
 Generate frame templates or automatically generate one from provided image and text  
 Remove aliasing between frame and images  
